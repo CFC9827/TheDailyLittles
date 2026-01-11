@@ -1,0 +1,300 @@
+.home {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: var(--color-bg);
+}
+
+.home__header {
+    text-align: center;
+    padding: var(--space-12) var(--space-4) var(--space-8);
+}
+
+.home__title {
+    font-family: var(--font-primary);
+    font-size: var(--text-4xl);
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin: 0 0 var(--space-2);
+    letter-spacing: -0.02em;
+}
+
+.home__subtitle {
+    font-size: var(--text-lg);
+    color: var(--color-text-secondary);
+    margin: 0;
+}
+
+.home__games {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    padding: 0 var(--space-4);
+    max-width: 650px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+/* Daily Challenge Section */
+.daily-challenge {
+    background: var(--color-bg-elevated);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-2xl);
+    padding: var(--space-6);
+    margin-bottom: var(--space-8);
+    position: relative;
+    overflow: hidden;
+    transition: all var(--transition-base);
+}
+
+.daily-challenge--completed {
+    border-color: var(--color-accent);
+    background: linear-gradient(135deg, var(--color-bg-elevated) 0%, rgba(132, 216, 129, 0.05) 100%);
+}
+
+.daily-challenge__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: var(--space-6);
+}
+
+.daily-challenge__info h2 {
+    font-size: var(--text-2xl);
+    font-weight: 800;
+    margin: 0 0 var(--space-1);
+    letter-spacing: -0.01em;
+}
+
+.daily-challenge__date {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    font-weight: 500;
+}
+
+.daily-challenge__stats {
+    display: flex;
+    gap: var(--space-4);
+}
+
+.stat-badge {
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+    background: var(--color-bg-secondary);
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-full);
+    font-size: var(--text-sm);
+    font-weight: 700;
+}
+
+.stat-badge--streak {
+    background: #fff7ed;
+    color: #c2410c;
+}
+
+.stat-badge--stars {
+    background: #fefce8;
+    color: #a16207;
+}
+
+.daily-challenge__games {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-4);
+}
+
+.daily-game-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    text-decoration: none;
+    transition: all var(--transition-base);
+    color: var(--color-text-primary);
+}
+
+.daily-game-btn:hover {
+    border-color: var(--game-color);
+    transform: translateY(-4px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.daily-game-btn--completed {
+    border-color: var(--game-color) !important;
+    background: var(--color-bg-secondary);
+}
+
+.daily-game-btn__status {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-bg-secondary);
+    border-radius: var(--radius-full);
+    color: var(--color-text-muted);
+}
+
+.daily-game-btn--completed .daily-game-btn__status {
+    background: var(--game-color);
+    color: white;
+}
+
+.daily-game-btn__name {
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.05em;
+}
+
+.daily-challenge__footer {
+    display: flex;
+    justify-content: center;
+    margin-top: var(--space-6);
+}
+
+.share-btn {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-6);
+    background: var(--color-text-primary);
+    color: var(--color-bg);
+    border: none;
+    border-radius: var(--radius-full);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-base);
+}
+
+.share-btn:hover {
+    opacity: 0.9;
+    transform: scale(1.02);
+}
+
+.section-title {
+    font-size: var(--text-sm);
+    font-weight: 700;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin: var(--space-4) 0 var(--space-2);
+}
+
+/* Game Card */
+.game-card {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    padding: var(--space-5);
+    background: var(--color-bg-elevated);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    text-decoration: none;
+    transition: all var(--transition-base);
+    cursor: pointer;
+}
+
+.game-card:hover {
+    border-color: var(--card-accent, var(--color-border));
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+}
+
+.game-card:active {
+    transform: translateY(0);
+}
+
+.game-card__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 72px;
+    height: 72px;
+    background: linear-gradient(135deg, var(--color-bg-secondary) 0%, var(--color-bg) 100%);
+    border-radius: var(--radius-lg);
+    color: var(--card-accent, var(--color-text-primary));
+    flex-shrink: 0;
+}
+
+.game-card__content {
+    flex: 1;
+    min-width: 0;
+}
+
+.game-card__name {
+    font-family: var(--font-primary);
+    font-size: var(--text-xl);
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin: 0 0 var(--space-1);
+    letter-spacing: 0.05em;
+}
+
+.game-card__description {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    margin: 0;
+    line-height: 1.4;
+}
+
+.game-card__arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    color: var(--color-text-muted);
+    transition: all var(--transition-fast);
+}
+
+.game-card:hover .game-card__arrow {
+    color: var(--card-accent, var(--color-text-primary));
+    transform: translateX(4px);
+}
+
+.home__footer {
+    text-align: center;
+    padding: var(--space-8) var(--space-4);
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .home__header {
+        padding: var(--space-8) var(--space-4) var(--space-6);
+    }
+
+    .home__title {
+        font-size: var(--text-3xl);
+    }
+
+    .home__subtitle {
+        font-size: var(--text-base);
+    }
+
+    .game-card {
+        padding: var(--space-4);
+        gap: var(--space-3);
+    }
+
+    .game-card__icon {
+        width: 56px;
+        height: 56px;
+    }
+
+    .game-card__icon svg {
+        width: 32px;
+        height: 32px;
+    }
+
+    .game-card__name {
+        font-size: var(--text-lg);
+    }
+}

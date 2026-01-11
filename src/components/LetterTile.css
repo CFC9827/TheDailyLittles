@@ -1,0 +1,144 @@
+.letter-tile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 58px;
+    background: var(--color-tile-bg);
+    border: 2px solid var(--color-tile-border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    user-select: none;
+    padding: var(--space-1);
+    gap: 2px;
+}
+
+.letter-tile:hover {
+    border-color: var(--color-tile-border-active);
+    transform: translateY(-1px);
+}
+
+.letter-tile:active {
+    transform: translateY(0);
+}
+
+/* Selected state */
+.letter-tile--selected {
+    border-color: var(--color-selected);
+    background: var(--color-selected);
+    box-shadow: 0 0 0 2px rgba(58, 58, 60, 0.3);
+}
+
+.letter-tile--selected .letter-tile__cipher {
+    color: #ffffff;
+}
+
+.letter-tile--selected .letter-tile__guess {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* Highlighted state (same cipher letter as selected) */
+.letter-tile--highlighted {
+    border-color: var(--color-highlight);
+    background: rgba(181, 159, 59, 0.15);
+}
+
+/* Filled state */
+.letter-tile--filled {
+    background: var(--color-tile-bg-filled);
+}
+
+/* Correct state (game complete) */
+.letter-tile--correct {
+    background-color: var(--success-color, #4caf50);
+    border-color: var(--success-color, #4caf50);
+    color: white;
+}
+
+.letter-tile--incorrect {
+    border-color: var(--error-color, #f44336);
+    box-shadow: 0 0 8px rgba(244, 67, 54, 0.4);
+    animation: shake 0.4s ease-in-out;
+}
+
+@keyframes shake {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-4px);
+    }
+
+    50% {
+        transform: translateX(4px);
+    }
+
+    75% {
+        transform: translateX(-2px);
+    }
+}
+
+.letter-tile--correct .letter-tile__cipher {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.letter-tile--correct .letter-tile__guess {
+    color: #ffffff;
+    font-weight: 600;
+}
+
+/* Cipher letter (top) */
+.letter-tile__cipher {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    line-height: 1;
+    letter-spacing: 0.5px;
+}
+
+/* Guessed letter (bottom) */
+.letter-tile__guess {
+    font-family: var(--font-primary);
+    font-size: var(--text-xl);
+    font-weight: 600;
+    color: var(--color-tile-guess);
+    line-height: 1;
+    min-height: 1.25rem;
+}
+
+/* Responsive sizing */
+@media (max-width: 600px) {
+    .letter-tile {
+        width: 36px;
+        height: 48px;
+    }
+
+    .letter-tile__cipher {
+        font-size: var(--text-xs);
+    }
+
+    .letter-tile__guess {
+        font-size: var(--text-lg);
+    }
+}
+
+@media (max-width: 400px) {
+    .letter-tile {
+        width: 30px;
+        height: 42px;
+    }
+
+    .letter-tile__cipher {
+        font-size: 0.65rem;
+    }
+
+    .letter-tile__guess {
+        font-size: var(--text-base);
+    }
+}

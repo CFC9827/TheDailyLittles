@@ -1,0 +1,398 @@
+/**
+ * Mini Crossword Styles
+ * 
+ * Clean NYT-style crossword aesthetic
+ */
+
+.mini-game {
+    min-height: 100vh;
+    background: var(--color-bg);
+    display: flex;
+    flex-direction: column;
+}
+
+.mini-game__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-4);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.mini-game__back {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    border-radius: var(--radius-md);
+    transition: all var(--transition-fast);
+}
+
+.mini-game__back:hover {
+    background: var(--color-bg-secondary);
+    color: var(--color-text-primary);
+}
+
+.mini-game__title {
+    font-size: var(--text-xl);
+    font-weight: 700;
+    color: var(--color-text-primary);
+    letter-spacing: 0.1em;
+}
+
+.mini-game__header-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.mini-game__header-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: transparent;
+    border: none;
+    color: var(--color-text-secondary);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.mini-game__header-btn:hover {
+    background: var(--color-bg-secondary);
+    color: var(--color-text-primary);
+}
+
+/* Main content */
+.mini-game__main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: var(--space-4);
+    gap: var(--space-4);
+    max-width: 600px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.mini-game__info {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    color: var(--color-text-secondary);
+    font-size: var(--text-sm);
+}
+
+.mini-game__puzzle-number {
+    font-weight: 600;
+}
+
+.mini-game__timer {
+    font-family: var(--font-mono);
+}
+
+/* Current clue */
+.mini-game__current-clue {
+    background: var(--color-bg-secondary);
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-md);
+    width: 100%;
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+}
+
+.mini-game__clue-number {
+    font-weight: 700;
+    color: var(--color-text-primary);
+    font-size: var(--text-sm);
+    background: var(--color-bg);
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--radius-sm);
+}
+
+.mini-game__clue-text {
+    color: var(--color-text-primary);
+    font-size: var(--text-base);
+}
+
+.mini-game__clue-text--placeholder {
+    color: var(--color-text-muted);
+    font-style: italic;
+}
+
+/* Crossword grid */
+.mini-game__grid {
+    display: flex;
+    flex-direction: column;
+    border: 2px solid var(--color-text-primary);
+    user-select: none;
+}
+
+.mini-game__row {
+    display: flex;
+}
+
+.mini-game__cell {
+    width: 52px;
+    height: 52px;
+    border: 1px solid var(--color-border);
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: pointer;
+    font-size: var(--text-xl);
+    font-weight: 600;
+    color: var(--color-text-primary);
+    transition: background var(--transition-fast);
+    padding: 0;
+}
+
+.mini-game__cell--black {
+    background: var(--color-text-primary);
+    cursor: default;
+}
+
+.mini-game__cell--selected {
+    background: #a8d1ff;
+}
+
+.mini-game__cell--word {
+    background: #d4e8ff;
+}
+
+.mini-game__cell-number {
+    position: absolute;
+    top: 2px;
+    left: 3px;
+    font-size: 9px;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+}
+
+.mini-game__cell-letter {
+    font-size: var(--text-xl);
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+/* Clue lists */
+.mini-game__clues {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4);
+    width: 100%;
+    margin-top: var(--space-2);
+}
+
+.mini-game__clue-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.mini-game__clue-heading {
+    font-size: var(--text-sm);
+    font-weight: 700;
+    color: var(--color-text-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.mini-game__clue-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+}
+
+.mini-game__clue-item {
+    display: flex;
+    gap: var(--space-2);
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+}
+
+.mini-game__clue-item:hover {
+    background: var(--color-bg-secondary);
+    color: var(--color-text-primary);
+}
+
+.mini-game__clue-item--active {
+    background: #d4e8ff;
+    color: var(--color-text-primary);
+}
+
+.mini-game__clue-num {
+    font-weight: 600;
+    min-width: 16px;
+}
+
+/* Modal */
+.mini-game__modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    padding: var(--space-4);
+}
+
+.mini-game__modal {
+    background: var(--color-bg);
+    border-radius: var(--radius-lg);
+    padding: var(--space-8);
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+    animation: modalSlide 0.2s ease;
+}
+
+@keyframes modalSlide {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.mini-game__modal h2 {
+    font-size: var(--text-2xl);
+    margin-bottom: var(--space-6);
+    color: var(--color-text-primary);
+}
+
+.mini-game__result {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-8);
+    margin-bottom: var(--space-6);
+}
+
+.mini-game__result-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+}
+
+.mini-game__result-label {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.mini-game__result-value {
+    font-size: var(--text-3xl);
+    font-weight: 700;
+    color: var(--color-text-primary);
+}
+
+.mini-game__modal-actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+
+.mini-game__share-btn {
+    width: 100%;
+    padding: var(--space-4);
+    font-size: var(--text-base);
+    font-weight: 600;
+    background: var(--color-success);
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.mini-game__share-btn:hover {
+    background: #059669;
+}
+
+.mini-game__close-btn {
+    padding: var(--space-3);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    background: transparent;
+    color: var(--color-text-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.mini-game__close-btn:hover {
+    background: var(--color-bg-secondary);
+    color: var(--color-text-primary);
+}
+
+/* Stats grid */
+.mini-game__stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-4);
+    margin-bottom: var(--space-6);
+}
+
+.mini-game__stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-1);
+}
+
+.mini-game__stat-value {
+    font-size: var(--text-2xl);
+    font-weight: 700;
+    color: var(--color-text-primary);
+}
+
+.mini-game__stat-label {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Mobile adjustments */
+@media (max-width: 480px) {
+    .mini-game__cell {
+        width: 44px;
+        height: 44px;
+    }
+
+    .mini-game__cell-letter {
+        font-size: var(--text-lg);
+    }
+
+    .mini-game__clues {
+        grid-template-columns: 1fr;
+    }
+
+    .mini-game__stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

@@ -1,0 +1,133 @@
+.keyboard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-4);
+    width: 100%;
+    max-width: 520px;
+    margin: 0 auto;
+}
+
+.keyboard__row {
+    display: flex;
+    gap: var(--space-1);
+    justify-content: center;
+    width: 100%;
+}
+
+.keyboard__key {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 43px;
+    height: 58px;
+    background: var(--color-bg-secondary);
+    border: none;
+    border-radius: var(--radius-md);
+    font-family: var(--font-primary);
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: var(--color-text-primary);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    user-select: none;
+    flex: 1;
+    max-width: 50px;
+}
+
+.keyboard__key:hover:not(:disabled) {
+    background: var(--color-border);
+}
+
+.keyboard__key:active:not(:disabled) {
+    transform: scale(0.95);
+}
+
+.keyboard__key:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Used letter state */
+.keyboard__key--used {
+    background: var(--color-correct);
+    color: #ffffff;
+}
+
+.keyboard__key--used:hover:not(:disabled) {
+    background: var(--color-accent-hover);
+}
+
+/* Wide keys (backspace) */
+.keyboard__key--wide {
+    flex: 1.5;
+    max-width: 80px;
+}
+
+.keyboard__key--backspace {
+    background: var(--color-bg-secondary);
+    color: var(--color-text-secondary);
+}
+
+.keyboard__key--backspace:hover:not(:disabled) {
+    background: var(--color-border);
+    color: var(--color-text-primary);
+}
+
+.keyboard__key--backspace svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* Spacer for row alignment */
+.keyboard__spacer {
+    flex: 0.5;
+}
+
+.keyboard__spacer--wide {
+    flex: 1.5;
+    max-width: 80px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .keyboard {
+        padding: var(--space-2);
+        gap: var(--space-1);
+    }
+
+    .keyboard__row {
+        gap: 4px;
+    }
+
+    .keyboard__key {
+        min-width: 32px;
+        max-width: 40px;
+        height: 48px;
+        font-size: var(--text-base);
+        border-radius: var(--radius-sm);
+    }
+
+    .keyboard__key--wide {
+        max-width: 60px;
+    }
+
+    .keyboard__key--backspace svg {
+        width: 18px;
+        height: 18px;
+    }
+}
+
+@media (max-width: 400px) {
+    .keyboard__key {
+        min-width: 26px;
+        max-width: 34px;
+        height: 42px;
+        font-size: var(--text-sm);
+    }
+
+    .keyboard__key--wide {
+        max-width: 50px;
+    }
+}

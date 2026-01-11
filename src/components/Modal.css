@@ -1,0 +1,106 @@
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: var(--color-overlay);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-4);
+    z-index: var(--z-modal);
+    animation: fadeIn var(--transition-fast) ease-out;
+}
+
+.modal {
+    background: var(--color-modal-bg);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-xl);
+    max-height: 90vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    animation: scaleIn var(--transition-base) ease-out;
+}
+
+.modal--small {
+    width: 100%;
+    max-width: 320px;
+}
+
+.modal--medium {
+    width: 100%;
+    max-width: 420px;
+}
+
+.modal--large {
+    width: 100%;
+    max-width: 540px;
+}
+
+.modal__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-4) var(--space-5);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.modal__title {
+    font-family: var(--font-primary);
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin: 0;
+}
+
+.modal__close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: transparent;
+    border: none;
+    border-radius: var(--radius-md);
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    margin-left: auto;
+}
+
+.modal__close:hover {
+    background: var(--color-bg-secondary);
+    color: var(--color-text-primary);
+}
+
+.modal__content {
+    padding: var(--space-5);
+    overflow-y: auto;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .modal-overlay {
+        padding: var(--space-3);
+        align-items: flex-end;
+    }
+
+    .modal {
+        max-height: 85vh;
+        border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+        animation: slideInFromBottom var(--transition-base) ease-out;
+    }
+
+    .modal--small,
+    .modal--medium,
+    .modal--large {
+        max-width: 100%;
+    }
+
+    .modal__header {
+        padding: var(--space-3) var(--space-4);
+    }
+
+    .modal__content {
+        padding: var(--space-4);
+    }
+}

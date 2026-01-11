@@ -1,0 +1,151 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: var(--color-bg);
+}
+
+.app__main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--space-4);
+  padding-bottom: var(--space-8);
+  gap: var(--space-4);
+}
+
+.app__controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.app__puzzle-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+  text-align: center;
+}
+
+.app__puzzle-number {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--color-text-muted);
+  letter-spacing: 0.3px;
+}
+
+.app__selected-hint {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  animation: fadeIn var(--transition-fast) ease-out;
+}
+
+.app__selected-hint strong {
+  font-family: var(--font-mono);
+  color: var(--color-text-primary);
+  background: var(--color-bg-secondary);
+  padding: 0 var(--space-1);
+  border-radius: var(--radius-sm);
+}
+
+.app__start-hint {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  margin-top: var(--space-2);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* Crossword-style Clue Section */
+.app__clue-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+  max-width: 500px;
+}
+
+.app__clue-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.app__clue-toggle:hover {
+  border-color: var(--color-text-secondary);
+  color: var(--color-text-primary);
+}
+
+.app__clue-toggle--active {
+  background: var(--color-bg-secondary);
+  border-color: var(--color-text-secondary);
+  color: var(--color-text-primary);
+}
+
+.app__clue {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+  border: 1px solid #fcd34d;
+  border-radius: var(--radius-lg);
+  text-align: center;
+}
+
+.app__clue-label {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: #92400e;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.app__clue-text {
+  font-size: var(--text-base);
+  font-weight: 500;
+  font-style: italic;
+  color: #78350f;
+}
+
+/* Toast notification */
+.app__toast {
+  position: fixed;
+  bottom: var(--space-8);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--color-text-primary);
+  color: var(--color-bg);
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--radius-full);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  box-shadow: var(--shadow-lg);
+  z-index: var(--z-toast);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .app__main {
+    padding: var(--space-3);
+    padding-bottom: var(--space-6);
+    gap: var(--space-3);
+  }
+
+  .app__controls {
+    gap: var(--space-3);
+  }
+}

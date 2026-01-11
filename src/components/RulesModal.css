@@ -1,0 +1,72 @@
+.rules-modal {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+.rules-modal__game-title {
+    font-size: var(--text-lg);
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin: 0;
+    text-align: center;
+}
+
+.rules-modal__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+
+.rules-modal__item {
+    display: flex;
+    gap: var(--space-3);
+    align-items: flex-start;
+    padding: var(--space-3);
+    background: var(--color-bg-secondary);
+    border-radius: var(--radius-md);
+    transition: background var(--transition-fast);
+}
+
+.rules-modal__item:hover {
+    background: var(--color-bg-elevated);
+}
+
+.rules-modal__icon {
+    font-size: var(--text-xl);
+    flex-shrink: 0;
+}
+
+.rules-modal__content {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.rules-modal__content p {
+    margin: 0;
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    line-height: 1.4;
+}
+
+.rules-modal__content strong {
+    color: var(--color-text-primary);
+}
+
+.rules-modal__btn {
+    margin-top: var(--space-2);
+    padding: var(--space-3);
+    background: #6366f1;
+    color: white;
+    font-weight: 600;
+    border: none;
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.rules-modal__btn:hover {
+    background: #4f46e5;
+    transform: translateY(-1px);
+}

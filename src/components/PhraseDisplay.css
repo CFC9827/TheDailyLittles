@@ -1,0 +1,97 @@
+.phrase-display {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-6) var(--space-4);
+    min-height: 200px;
+}
+
+.phrase-display__words {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-4);
+    max-width: 100%;
+}
+
+.phrase-display__word {
+    display: flex;
+    gap: var(--space-1);
+    animation: fadeInUp var(--transition-slow) ease-out;
+    animation-fill-mode: both;
+}
+
+/* Stagger word animations */
+.phrase-display__word:nth-child(1) {
+    animation-delay: 0ms;
+}
+
+.phrase-display__word:nth-child(2) {
+    animation-delay: 50ms;
+}
+
+.phrase-display__word:nth-child(3) {
+    animation-delay: 100ms;
+}
+
+.phrase-display__word:nth-child(4) {
+    animation-delay: 150ms;
+}
+
+.phrase-display__word:nth-child(5) {
+    animation-delay: 200ms;
+}
+
+.phrase-display__word:nth-child(6) {
+    animation-delay: 250ms;
+}
+
+.phrase-display__word:nth-child(7) {
+    animation-delay: 300ms;
+}
+
+.phrase-display__word:nth-child(8) {
+    animation-delay: 350ms;
+}
+
+.phrase-display__word:nth-child(9) {
+    animation-delay: 400ms;
+}
+
+.phrase-display__word:nth-child(10) {
+    animation-delay: 450ms;
+}
+
+.phrase-display__punctuation {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--text-xl);
+    font-weight: 600;
+    color: var(--color-text-primary);
+    padding: 0 var(--space-1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .phrase-display {
+        padding: var(--space-4) var(--space-2);
+        min-height: 150px;
+    }
+
+    .phrase-display__words {
+        gap: var(--space-3);
+    }
+}
+
+@media (max-width: 400px) {
+    .phrase-display__words {
+        gap: var(--space-2);
+    }
+
+    .phrase-display__word {
+        gap: 2px;
+    }
+}

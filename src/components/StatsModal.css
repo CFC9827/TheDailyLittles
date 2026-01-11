@@ -1,0 +1,124 @@
+.stats-modal {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+.stats-modal__overview {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-2);
+}
+
+.stats-modal__overview-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: var(--space-2);
+}
+
+.stats-modal__overview-value {
+    font-family: var(--font-primary);
+    font-size: var(--text-2xl);
+    font-weight: 700;
+    color: var(--color-text-primary);
+    line-height: 1.2;
+}
+
+.stats-modal__overview-value--stars {
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+    color: #f59e0b;
+}
+
+.stats-modal__overview-label {
+    font-size: var(--text-xs);
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    margin-top: var(--space-1);
+}
+
+.stats-modal__divider {
+    height: 1px;
+    background: var(--color-border);
+}
+
+.stats-modal__breakdown {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+
+.stats-modal__breakdown-title {
+    font-family: var(--font-primary);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0;
+}
+
+.stats-modal__difficulty {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--space-3);
+    background: var(--color-bg-secondary);
+    border-radius: var(--radius-lg);
+}
+
+.stats-modal__difficulty-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.stats-modal__difficulty-label {
+    font-family: var(--font-primary);
+    font-size: var(--text-base);
+    font-weight: 600;
+    color: var(--color-text-primary);
+}
+
+.stats-modal__difficulty-count {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+}
+
+.stats-modal__difficulty-times {
+    display: flex;
+    gap: var(--space-4);
+}
+
+.stats-modal__time-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.stats-modal__time-label {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.stats-modal__time-value {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-text-primary);
+}
+
+/* Responsive */
+@media (max-width: 400px) {
+    .stats-modal__overview {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .stats-modal__overview-value {
+        font-size: var(--text-xl);
+    }
+}
