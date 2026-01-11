@@ -13,6 +13,9 @@ import { ShiftGame } from './games/shift/ShiftGame';
 import { SortGame } from './games/sort/SortGame';
 import { MiniGame } from './games/mini/MiniGame';
 import { AdminDashboard } from './pages/AdminDashboard';
+import { Leaderboard } from './pages/Leaderboard';
+import { Groups } from './pages/Groups';
+import { Profile } from './pages/Profile';
 import './index.css';
 
 function App() {
@@ -27,6 +30,9 @@ function App() {
           <Route path="/sort" element={<SortGame />} />
           <Route path="/mini" element={<MiniGame />} />
           <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/leaderboard" element={<Leaderboard />} />
+          <Route path="/groups" element={<Groups />} />
+          <Route path="/profile" element={<Profile />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>
