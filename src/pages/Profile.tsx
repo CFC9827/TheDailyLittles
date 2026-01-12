@@ -8,6 +8,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useFollows } from '../hooks/useSocial';
+import { useGameStats, formatTime } from '../hooks/useGameStats';
 import { AuthModal } from '../components/AuthModal';
 import { NotificationSettings } from '../components/NotificationSettings';
 import './Profile.css';
@@ -22,6 +23,7 @@ export const Profile: React.FC = () => {
         signOut
     } = useAuth();
     const { stats } = useFollows();
+    const gameStats = useGameStats();
     const [showAuthModal, setShowAuthModal] = useState(false);
     const [showNotifications, setShowNotifications] = useState(false);
 
@@ -59,7 +61,7 @@ export const Profile: React.FC = () => {
                     </div>
                 </div>
 
-                {/* Stats - Mutuals Only */}
+                {/* Friends stat */}
                 {isAuthenticated && (
                     <div className="profile-page__stats">
                         <div className="profile-page__stat profile-page__stat--mutuals">
@@ -68,6 +70,42 @@ export const Profile: React.FC = () => {
                         </div>
                     </div>
                 )}
+
+                {/* Game Stats */}
+                <div className="profile-page__game-stats">
+                    <h3 className="profile-page__section-title">Your Stats</h3>
+                    <div className="profile-page__game-stats-overview">
+                        <div className="profile-page__game-stat-item">
+                            <span className="profile-page__game-stat-value">{gameStats.totalGamesPlayed}</span>
+                            <span className="profile-page__game-stat-label">Games Played</span>
+                        </div>
+                        <div className="profile-page__game-stat-item">
+                            <span className="profile-page__game-stat-value">{gameStats.currentStreak}</span>
+                            <span className="profile-page__game-stat-label">Day Streak</span>
+                        </div>
+                        <div className="profile-page__game-stat-item">
+                            <span className="profile-page__game-stat-value">{gameStats.maxStreak}</span>
+                            <span className="profile-page__game-stat-label">Best Streak</span>
+                        </div>
+                    </div>
+                    <div className="profile-page__game-breakdown">
+                        {gameStats.perGame.map((game) => (
+                            <div key={game.name} className="profile-page__game-row" style={{ '--game-color': game.color } as React.CSSProperties}>
+                                <span className="profile-page__game-name">{game.name}</span>
+                                <span className="profile-page__game-played">{game.played} plays</span>
+                                {game.bestTime !== undefined && game.bestTime !== null && (
+                                    <span className="profile-page__game-best">{formatTime(game.bestTime)}</span>
+                                )}
+                                {game.bestMoves !== undefined && game.bestMoves !== null && (
+                                    <span className="profile-page__game-best">{game.bestMoves} moves</span>
+                                )}
+                                {game.bestScore !== undefined && game.bestScore !== null && (
+                                    <span className="profile-page__game-best">{game.bestScore} pts</span>
+                                )}
+                            </div>
+                        ))}
+                    </div>
+                </div>
 
                 {/* Actions */}
                 <div className="profile-page__actions">

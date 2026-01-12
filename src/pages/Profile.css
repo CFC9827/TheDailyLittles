@@ -201,3 +201,80 @@
         gap: var(--space-4);
     }
 }
+
+/* Game Stats Section */
+.profile-page__game-stats {
+    margin-bottom: var(--space-6);
+    padding: var(--space-4);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+}
+
+.profile-page__section-title {
+    margin: 0 0 var(--space-4) 0;
+    font-size: var(--text-sm);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-muted);
+}
+
+.profile-page__game-stats-overview {
+    display: flex;
+    justify-content: space-around;
+    padding-bottom: var(--space-4);
+    margin-bottom: var(--space-4);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.profile-page__game-stat-item {
+    text-align: center;
+}
+
+.profile-page__game-stat-value {
+    display: block;
+    font-size: var(--text-2xl);
+    font-weight: 700;
+    color: var(--color-text-primary);
+}
+
+.profile-page__game-stat-label {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+}
+
+.profile-page__game-breakdown {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.profile-page__game-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-2) var(--space-3);
+    background: var(--color-bg-secondary);
+    border-radius: var(--radius-md);
+    border-left: 3px solid var(--game-color, var(--color-text-muted));
+}
+
+.profile-page__game-name {
+    font-weight: 600;
+    font-size: var(--text-sm);
+    color: var(--color-text-primary);
+    min-width: 80px;
+}
+
+.profile-page__game-played {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    flex: 1;
+}
+
+.profile-page__game-best {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-text-secondary);
+}
