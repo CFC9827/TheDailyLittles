@@ -20,7 +20,7 @@ export const Header: React.FC<HeaderProps> = ({
     showBack = false,
     onOpenAuth,
 }) => {
-    const { isAuthenticated, isGuest, displayName, guestUsername, signOut } = useAuth();
+    const { isAuthenticated, isGuest, displayName, guestUsername } = useAuth();
 
     return (
         <header className="header">
@@ -47,11 +47,11 @@ export const Header: React.FC<HeaderProps> = ({
             <div className="header__right">
                 <div className="header__actions">
                     {isAuthenticated && !isGuest ? (
-                        <button className="header__profile" onClick={() => signOut()} title="Sign Out">
+                        <Link to="/profile" className="header__profile" title="Your Profile">
                             <div className="header__avatar">
                                 {(displayName || guestUsername).charAt(0).toUpperCase()}
                             </div>
-                        </button>
+                        </Link>
                     ) : (
                         <button className="header__auth-btn" onClick={onOpenAuth}>
                             Sign In
