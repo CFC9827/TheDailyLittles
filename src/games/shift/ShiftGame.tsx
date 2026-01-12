@@ -5,7 +5,8 @@
  */
 
 import React, { useState, useCallback, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import { Header } from '../../components/Header';
 import {
     getDailyPuzzle,
     shiftRow,
@@ -21,8 +22,12 @@ import { registerCompletion } from '../../utils/dailyChallenge';
 import './ShiftGame.css';
 
 export const ShiftGame: React.FC = () => {
-    const [difficulty, setDifficulty] = useState<Difficulty>('easy');
-    const [puzzle, setPuzzle] = useState<ShiftPuzzle>(() => getDailyPuzzle('easy'));
+    const location = useLocation();
+    const searchParams = new URLSearchParams(location.search);
+    const isDailyMode = searchParams.get('mode') === 'daily';
+
+    const [difficulty, setDifficulty] = useState<Difficulty>(isDailyMode ? 'easy' : 'easy');
+    const [puzzle, setPuzzle] = useState<ShiftPuzzle>(() => getDailyPuzzle(isDailyMode ? 'easy' : 'easy'));
     const [grid, setGrid] = useState<string[][]>(puzzle.grid);
     const [moves, setMoves] = useState(0);
     const [elapsedTime, setElapsedTime] = useState(0);
@@ -152,48 +157,26 @@ export const ShiftGame: React.FC = () => {
 
     return (
         <div className="shift-game">
-            <header className="shift-game__header">
-                <Link to="/" className="shift-game__back">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <path d="M19 12H5M12 19l-7-7 7-7" />
-                    </svg>
-                </Link>
-                <h1 className="shift-game__title">SHIFT</h1>
-                <div className="shift-game__header-actions">
-                    <button className="shift-game__header-btn" onClick={() => setShowLeaderboard(true)} title="Leaderboard">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                            <path d="M18 3a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3H6a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3V6a3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3h12a3 3 0 0 0 3-3 3 3 0 0 0-3-3z" />
-                        </svg>
-                    </button>
-                    <button className="shift-game__header-btn" onClick={() => setShowStats(true)} title="Statistics">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                            <line x1="18" y1="20" x2="18" y2="10" />
-                            <line x1="12" y1="20" x2="12" y2="4" />
-                            <line x1="6" y1="20" x2="6" y2="14" />
-                        </svg>
-                    </button>
-                    <button className="shift-game__header-btn" onClick={() => setShowRules(true)} title="How to Play">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                            <circle cx="12" cy="12" r="10" />
-                            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01" />
-                        </svg>
-                    </button>
-                </div>
-            </header>
+            <Header
+                title="SHIFT"
+                showBack
+            />
 
             <main className="shift-game__main">
                 {/* Difficulty Selector */}
-                <div className="shift-game__difficulty">
-                    {(['easy', 'medium', 'hard'] as Difficulty[]).map(d => (
-                        <button
-                            key={d}
-                            className={`shift-game__diff-btn ${difficulty === d ? 'shift-game__diff-btn--active' : ''}`}
-                            onClick={() => changeDifficulty(d)}
-                        >
-                            {d.charAt(0).toUpperCase() + d.slice(1)}
-                        </button>
-                    ))}
-                </div>
+                {!isDailyMode && (
+                    <div className="shift-game__difficulty">
+                        {(['easy', 'medium', 'hard'] as Difficulty[]).map(d => (
+                            <button
+                                key={d}
+                                className={`shift-game__diff-btn ${difficulty === d ? 'shift-game__diff-btn--active' : ''}`}
+                                onClick={() => changeDifficulty(d)}
+                            >
+                                {d.charAt(0).toUpperCase() + d.slice(1)}
+                            </button>
+                        ))}
+                    </div>
+                )}
 
                 {/* Puzzle Number */}
                 <div className="shift-game__puzzle-number">Little #{puzzle.puzzleNumber}</div>

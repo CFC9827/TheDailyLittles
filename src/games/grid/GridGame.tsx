@@ -3,12 +3,12 @@
  */
 
 import React, { useState, useCallback, useMemo, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
 import { getDailyPuzzle } from './utils/solutionGenerator';
 import { validateGrid, type GridPosition } from './utils/gridValidator';
 import { calculateScore, type ScoreResult } from './utils/scoring';
 import { loadStats, updateStatsOnWin, loadGameProgress, saveGameProgress } from './utils/storage';
 import { RulesModal } from '../../components/RulesModal';
+import { Header } from '../../components/Header';
 import { registerCompletion } from '../../utils/dailyChallenge';
 import './GridGame.css';
 
@@ -222,34 +222,10 @@ export const GridGame: React.FC = () => {
 
     return (
         <div className="grid-game">
-            <header className="grid-game__header">
-                <Link to="/" className="grid-game__back">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <path d="M19 12H5M12 19l-7-7 7-7" />
-                    </svg>
-                </Link>
-                <h1 className="grid-game__title">GRIDGRAM</h1>
-                <div className="grid-game__header-actions">
-                    <button className="grid-game__header-btn" onClick={() => setShowLeaderboard(true)} title="Leaderboard">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                            <path d="M18 3a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3H6a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3V6a3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3h12a3 3 0 0 0 3-3 3 3 0 0 0-3-3z" />
-                        </svg>
-                    </button>
-                    <button className="grid-game__header-btn" onClick={() => setShowStats(true)} title="Statistics">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                            <line x1="18" y1="20" x2="18" y2="10" />
-                            <line x1="12" y1="20" x2="12" y2="4" />
-                            <line x1="6" y1="20" x2="6" y2="14" />
-                        </svg>
-                    </button>
-                    <button className="grid-game__header-btn" onClick={() => setShowRules(true)} title="How to Play">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                            <circle cx="12" cy="12" r="10" />
-                            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01" />
-                        </svg>
-                    </button>
-                </div>
-            </header>
+            <Header
+                title="GRIDGRAM"
+                showBack
+            />
             <main className="grid-game__main">
                 <div className="grid-game__puzzle-info">
                     <span className="grid-game__puzzle-number">Little #{puzzle.puzzleNumber}</span>

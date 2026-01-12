@@ -1,71 +1,8 @@
-/**
- * SORT Game Styles
- * 
- * Clean NYT-style aesthetic with calm animations
- */
-
 .sort-game {
     min-height: 100vh;
     background: var(--color-bg);
     display: flex;
     flex-direction: column;
-}
-
-.sort-game__header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: var(--space-4);
-    border-bottom: 1px solid var(--color-border);
-}
-
-.sort-game__back {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    color: var(--color-text-secondary);
-    text-decoration: none;
-    border-radius: var(--radius-md);
-    transition: all var(--transition-fast);
-}
-
-.sort-game__back:hover {
-    background: var(--color-bg-secondary);
-    color: var(--color-text-primary);
-}
-
-.sort-game__title {
-    font-size: var(--text-xl);
-    font-weight: 700;
-    color: var(--color-text-primary);
-    letter-spacing: 0.1em;
-}
-
-.sort-game__header-actions {
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
-}
-
-.sort-game__header-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    background: transparent;
-    border: none;
-    color: var(--color-text-secondary);
-    border-radius: var(--radius-md);
-    cursor: pointer;
-    transition: all var(--transition-fast);
-}
-
-.sort-game__header-btn:hover {
-    background: var(--color-bg-secondary);
-    color: var(--color-text-primary);
 }
 
 /* Main content */

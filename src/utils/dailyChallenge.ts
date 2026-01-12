@@ -61,8 +61,7 @@ export const getEffectiveDate = (now: Date = new Date()): string => {
 export const ALL_GAMES = [
     { id: 'cipher', name: 'CIPHER', path: '/cipher' },
     { id: 'gridgram', name: 'GRIDGRAM', path: '/gridgram' },
-    { id: 'shift', name: 'SHIFT', path: '/shift' },
-    { id: 'sort', name: 'SORT', path: '/sort' }
+    { id: 'shift', name: 'SHIFT', path: '/shift' }
 ];
 
 /**

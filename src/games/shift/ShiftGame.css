@@ -5,55 +5,6 @@
     flex-direction: column;
 }
 
-.shift-game__header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: var(--space-3) var(--space-4);
-    border-bottom: 1px solid var(--color-border);
-    background: var(--color-bg-elevated);
-}
-
-.shift-game__back {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 36px;
-    height: 36px;
-    color: var(--color-text-secondary);
-    text-decoration: none;
-    border-radius: var(--radius-md);
-}
-
-.shift-game__back:hover {
-    background: var(--color-bg-secondary);
-    color: var(--color-text-primary);
-}
-
-.shift-game__title {
-    font-size: var(--text-xl);
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    color: var(--color-text-primary);
-    margin: 0;
-}
-
-.shift-game__stats-badge {
-    min-width: 36px;
-}
-
-.shift-game__streak {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-1);
-    padding: var(--space-1) var(--space-2);
-    background: linear-gradient(135deg, #f0b429 0%, #f59e0b 100%);
-    border-radius: var(--radius-full);
-    font-size: var(--text-sm);
-    font-weight: 600;
-    color: #ffffff;
-}
-
 .shift-game__main {
     flex: 1;
     display: flex;
@@ -369,30 +320,6 @@
     color: var(--color-text-secondary);
 }
 
-.shift-game__header-actions {
-    display: flex;
-    align-items: center;
-    gap: var(--space-3);
-}
-
-.shift-game__header-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 36px;
-    height: 36px;
-    color: var(--color-text-secondary);
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    border-radius: var(--radius-md);
-    transition: all var(--transition-fast);
-}
-
-.shift-game__header-btn:hover {
-    background: var(--color-bg-secondary);
-    color: var(--color-text-primary);
-}
 
 /* Stats Modal */
 .shift-game__stats-grid {

@@ -6,7 +6,7 @@
 
 import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { getRandomPhrase, type Difficulty as CipherDifficulty } from '../data/phrases';
+import { getRandomPhrase } from '../data/phrases';
 import { getDailyPuzzle as getSortPuzzle } from '../games/sort/data/puzzles';
 import { getDailyPuzzle as getGridPuzzle } from '../games/grid/utils/solutionGenerator';
 import { getDailyPuzzle as getShiftPuzzle, type Difficulty as ShiftDifficulty } from '../games/shift/utils/puzzleGenerator';
@@ -46,10 +46,19 @@ export const AdminDashboard: React.FC = () => {
         day: 'numeric'
     });
 
-    // Get cipher puzzle
-    const cipherDifficulty: CipherDifficulty = 'medium'; // Default for admin preview
-    const cipherSeed = getCipherSeed(selectedDate);
-    const cipherPhrase = getRandomPhrase(cipherDifficulty, cipherSeed);
+    // Get cipher puzzles for all difficulties
+    const cipherEasy = useMemo(() => {
+        const seed = getCipherSeed(selectedDate);
+        return { ...getRandomPhrase('easy', seed), difficulty: 'Easy' };
+    }, [selectedDate]);
+    const cipherMedium = useMemo(() => {
+        const seed = getCipherSeed(selectedDate) * 2;
+        return { ...getRandomPhrase('medium', seed), difficulty: 'Medium' };
+    }, [selectedDate]);
+    const cipherHard = useMemo(() => {
+        const seed = getCipherSeed(selectedDate) * 3;
+        return { ...getRandomPhrase('hard', seed), difficulty: 'Hard' };
+    }, [selectedDate]);
     const cipherPuzzleNumber = getCipherPuzzleNumber(selectedDate);
 
     // Get other puzzles
@@ -58,6 +67,8 @@ export const AdminDashboard: React.FC = () => {
     const shiftDifficulty: ShiftDifficulty = 'medium';
     const shiftPuzzle = useMemo(() => getShiftPuzzle(shiftDifficulty, selectedDate), [selectedDate]);
     const miniPuzzle = useMemo(() => getMiniPuzzle(selectedDate), [selectedDate]);
+
+    const allCipherDifficulties = [cipherEasy, cipherMedium, cipherHard];
 
     return (
         <div className="admin">
@@ -93,25 +104,28 @@ export const AdminDashboard: React.FC = () => {
                     </button>
                 </div>
 
-                {/* CIPHER */}
+                {/* CIPHER - All 3 Difficulties */}
                 <section className="admin__section">
                     <h2 className="admin__section-title">
                         CIPHER
                         <span className="admin__puzzle-num">Little #{cipherPuzzleNumber}</span>
                     </h2>
                     <div className="admin__content">
-                        <div className="admin__row">
-                            <span className="admin__label">Difficulty</span>
-                            <span className="admin__value">{cipherDifficulty}</span>
-                        </div>
-                        <div className="admin__row">
-                            <span className="admin__label">Hint</span>
-                            <span className="admin__value">{cipherPhrase.hint}</span>
-                        </div>
-                        <div className="admin__row admin__row--answer">
-                            <span className="admin__label">Answer</span>
-                            <span className="admin__value admin__answer">{cipherPhrase.phrase}</span>
-                        </div>
+                        {allCipherDifficulties.map((puzzle, i) => (
+                            <div key={i} className="admin__difficulty-block">
+                                <div className="admin__row">
+                                    <span className="admin__label admin__label--difficulty">{puzzle.difficulty}</span>
+                                </div>
+                                <div className="admin__row">
+                                    <span className="admin__label">Hint</span>
+                                    <span className="admin__value">{puzzle.hint}</span>
+                                </div>
+                                <div className="admin__row admin__row--answer">
+                                    <span className="admin__label">Answer</span>
+                                    <span className="admin__value admin__answer">{puzzle.phrase}</span>
+                                </div>
+                            </div>
+                        ))}
                     </div>
                 </section>
 

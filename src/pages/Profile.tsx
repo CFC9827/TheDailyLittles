@@ -10,6 +10,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { useFollows } from '../hooks/useSocial';
 import { AuthModal } from '../components/AuthModal';
 import { PaywallModal } from '../components/PaywallModal';
+import { NotificationSettings } from '../components/NotificationSettings';
 import './Profile.css';
 
 export const Profile: React.FC = () => {
@@ -25,6 +26,7 @@ export const Profile: React.FC = () => {
     const { stats } = useFollows();
     const [showAuthModal, setShowAuthModal] = useState(false);
     const [showPaywall, setShowPaywall] = useState(false);
+    const [showNotifications, setShowNotifications] = useState(false);
 
     const handleSignOut = async () => {
         await signOut();
@@ -107,6 +109,15 @@ export const Profile: React.FC = () => {
 
                     {isAuthenticated && (
                         <button
+                            className="profile-page__action"
+                            onClick={() => setShowNotifications(true)}
+                        >
+                            Notification Settings
+                        </button>
+                    )}
+
+                    {isAuthenticated && (
+                        <button
                             className="profile-page__action profile-page__action--signout"
                             onClick={handleSignOut}
                         >
@@ -124,6 +135,11 @@ export const Profile: React.FC = () => {
             <PaywallModal
                 isOpen={showPaywall}
                 onClose={() => setShowPaywall(false)}
+            />
+
+            <NotificationSettings
+                isOpen={showNotifications}
+                onClose={() => setShowNotifications(false)}
             />
         </div>
     );

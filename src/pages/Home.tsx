@@ -6,6 +6,7 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Header } from '../components/Header';
 import { DailyChallenge } from '../components/DailyChallenge';
 import './Home.css';
 
@@ -101,44 +102,79 @@ const games: GameCard[] = [
     },
 ];
 
+import { useAuth } from '../contexts/AuthContext';
+import { AuthModal } from '../components/AuthModal';
+
 export const Home: React.FC = () => {
+    const { isAuthenticated } = useAuth();
+    const [isAuthOpen, setIsAuthOpen] = React.useState(false);
+
+    const handleGameClick = (e: React.MouseEvent) => {
+        if (!isAuthenticated) {
+            e.preventDefault();
+            setIsAuthOpen(true);
+        }
+    };
+
     return (
         <div className="home">
-            <header className="home__header">
-                <h1 className="home__title">The Daily Littles</h1>
-                <p className="home__subtitle">A small thing, done daily</p>
-            </header>
+            <Header title="The Daily Littles" onOpenAuth={() => setIsAuthOpen(true)} />
 
             <main className="home__games">
-                <DailyChallenge />
+                <DailyChallenge onOpenAuth={() => setIsAuthOpen(true)} />
 
                 <h3 className="section-title">Today's Littles</h3>
-                {games.map((game) => (
-                    <Link
-                        key={game.id}
-                        to={game.path}
-                        className="game-card"
-                        style={{ '--card-accent': game.color } as React.CSSProperties}
-                    >
-                        <div className="game-card__icon">
-                            {game.icon}
-                        </div>
-                        <div className="game-card__content">
-                            <h2 className="game-card__name">{game.name}</h2>
-                            <p className="game-card__description">{game.description}</p>
-                        </div>
-                        <div className="game-card__arrow">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                <path d="M5 12h14M12 5l7 7-7 7" />
-                            </svg>
-                        </div>
-                    </Link>
-                ))}
+                <div className="game-grid">
+                    {games.map((game) => {
+                        const isLocked = !isAuthenticated;
+
+                        return (
+                            <Link
+                                key={game.id}
+                                to={game.path}
+                                className={`game-card ${isLocked ? 'game-card--locked' : ''}`}
+                                style={{ '--card-accent': game.color } as React.CSSProperties}
+                                onClick={handleGameClick}
+                            >
+                                <div className="game-card__icon">
+                                    {game.icon}
+                                </div>
+                                <div className="game-card__content">
+                                    <div className="game-card__header">
+                                        <h2 className="game-card__name">{game.name}</h2>
+                                    </div>
+                                    <p className="game-card__description">
+                                        {isLocked ? 'Login to access Easy, Medium, and Hard puzzles' :
+                                            game.description}
+                                    </p>
+                                </div>
+                                <div className="game-card__arrow">
+                                    {isLocked ? (
+                                        <span className="game-card__lock-text">
+                                            LOGIN
+                                        </span>
+                                    ) : (
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                            <path d="M5 12h14M12 5l7 7-7 7" />
+                                        </svg>
+                                    )}
+                                </div>
+                            </Link>
+                        );
+                    })}
+                </div>
             </main>
 
             <footer className="home__footer">
-                <p>New Littles daily at 10:00 AM</p>
+                <p>New Littles daily at 10 AM EST</p>
+                <p className="home__footer-copyright">© 2026 The Daily Littles</p>
             </footer>
+
+            <AuthModal
+                isOpen={isAuthOpen}
+                onClose={() => setIsAuthOpen(false)}
+                mode="soft"
+            />
         </div>
     );
 };

@@ -5,11 +5,11 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { useMini } from './hooks/useMini';
 import { shareResult } from './utils/share';
 import { loadStats } from './utils/storage';
 import { RulesModal } from '../../components/RulesModal';
+import { Header } from '../../components/Header';
 import './MiniGame.css';
 
 export const MiniGame: React.FC = () => {
@@ -115,29 +115,10 @@ export const MiniGame: React.FC = () => {
 
     return (
         <div className="mini-game">
-            <header className="mini-game__header">
-                <Link to="/" className="mini-game__back">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <path d="M19 12H5M12 19l-7-7 7-7" />
-                    </svg>
-                </Link>
-                <h1 className="mini-game__title">MINI</h1>
-                <div className="mini-game__header-actions">
-                    <button className="mini-game__header-btn" onClick={() => setShowStats(true)} title="Statistics">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                            <line x1="18" y1="20" x2="18" y2="10" />
-                            <line x1="12" y1="20" x2="12" y2="4" />
-                            <line x1="6" y1="20" x2="6" y2="14" />
-                        </svg>
-                    </button>
-                    <button className="mini-game__header-btn" onClick={() => setShowRules(true)} title="How to Play">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                            <circle cx="12" cy="12" r="10" />
-                            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01" />
-                        </svg>
-                    </button>
-                </div>
-            </header>
+            <Header
+                title="MINI"
+                showBack
+            />
 
             <main className="mini-game__main">
                 <div className="mini-game__info">

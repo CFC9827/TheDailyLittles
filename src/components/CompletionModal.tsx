@@ -7,6 +7,7 @@
 import React from 'react';
 import { Modal } from './Modal';
 import { calculateStarsEarned } from '../utils/storage';
+import { useAuth } from '../contexts/AuthContext';
 import type { Difficulty } from '../data/phrases';
 import './CompletionModal.css';
 
@@ -15,10 +16,10 @@ interface CompletionModalProps {
     onClose: () => void;
     difficulty: Difficulty;
     timeElapsed: number;
-    streak: number;
     puzzleNumber: number;
     phrase: string;
     onShare: () => void;
+    gameId?: string;
 }
 
 export const CompletionModal: React.FC<CompletionModalProps> = ({
@@ -26,11 +27,12 @@ export const CompletionModal: React.FC<CompletionModalProps> = ({
     onClose,
     difficulty,
     timeElapsed,
-    streak,
     puzzleNumber,
     phrase,
     onShare,
+    gameId = 'cipher',
 }) => {
+    const { isAuthenticated } = useAuth();
     const formatTime = (ms: number): string => {
         const totalSeconds = Math.floor(ms / 1000);
         const minutes = Math.floor(totalSeconds / 60);
@@ -77,11 +79,16 @@ export const CompletionModal: React.FC<CompletionModalProps> = ({
                         <span className="completion-modal__stat-value">{difficultyLabel}</span>
                         <span className="completion-modal__stat-label">Difficulty</span>
                     </div>
-                    <div className="completion-modal__stat">
-                        <span className="completion-modal__stat-value">{streak}</span>
-                        <span className="completion-modal__stat-label">Streak</span>
-                    </div>
                 </div>
+
+                {!isAuthenticated && gameId === 'cipher' && (
+                    <div className="completion-modal__unlock-prompt">
+                        <p>Join to unlock Games 2 & 3!</p>
+                        <button className="completion-modal__join-btn" onClick={() => window.location.href = '/profile'}>
+                            Create Account
+                        </button>
+                    </div>
+                )}
 
                 <div className="completion-modal__actions">
                     <button

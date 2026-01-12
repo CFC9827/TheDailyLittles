@@ -9,29 +9,6 @@ import React, { createContext, useContext, useEffect, useState, useCallback } fr
 import { supabase, type User, type Session } from '../services/supabase';
 import type { Profile } from '../services/database.types';
 
-// Generate a random guest username
-function generateGuestUsername(): string {
-    const adjectives = ['Happy', 'Clever', 'Swift', 'Bright', 'Lucky', 'Calm', 'Bold', 'Keen'];
-    const nouns = ['Puzzle', 'Player', 'Solver', 'Thinker', 'Gamer', 'Mind', 'Star', 'Pro'];
-    const adj = adjectives[Math.floor(Math.random() * adjectives.length)];
-    const noun = nouns[Math.floor(Math.random() * nouns.length)];
-    const num = Math.floor(Math.random() * 9000) + 1000;
-    return `${adj}${noun}${num}`;
-}
-
-// Get or create guest identity
-function getGuestIdentity(): { guestId: string; guestUsername: string } {
-    const stored = localStorage.getItem('puzzle_guest_identity');
-    if (stored) {
-        return JSON.parse(stored);
-    }
-    const identity = {
-        guestId: crypto.randomUUID(),
-        guestUsername: generateGuestUsername(),
-    };
-    localStorage.setItem('puzzle_guest_identity', JSON.stringify(identity));
-    return identity;
-}
 
 export interface AuthState {
     // Auth state
@@ -54,7 +31,6 @@ export interface AuthState {
     signInWithEmail: (email: string, password: string) => Promise<{ error: Error | null }>;
     signUpWithEmail: (email: string, password: string, username: string) => Promise<{ error: Error | null }>;
     signInWithGoogle: () => Promise<{ error: Error | null }>;
-    signInWithApple: () => Promise<{ error: Error | null }>;
     signInWithMagicLink: (email: string) => Promise<{ error: Error | null }>;
     signOut: () => Promise<void>;
     updateUsername: (username: string) => Promise<{ error: Error | null }>;
@@ -67,8 +43,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const [session, setSession] = useState<Session | null>(null);
     const [profile, setProfile] = useState<Profile | null>(null);
     const [isLoading, setIsLoading] = useState(true);
-
-    const guestIdentity = getGuestIdentity();
 
     // Load profile when user changes
     const loadProfile = useCallback(async (userId: string) => {
@@ -151,14 +125,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         return { error: error as Error | null };
     };
 
-    // Sign in with Apple
-    const signInWithApple = async () => {
-        const { error } = await supabase.auth.signInWithOAuth({
-            provider: 'apple',
-            options: { redirectTo: window.location.origin },
-        });
-        return { error: error as Error | null };
-    };
 
     // Sign in with magic link
     const signInWithMagicLink = async (email: string) => {
@@ -175,6 +141,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setUser(null);
         setSession(null);
         setProfile(null);
+        // Navigate to home
+        window.location.href = '/';
     };
 
     // Update username
@@ -200,17 +168,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         isLoading,
 
         isGuest: !user,
-        guestId: guestIdentity.guestId,
-        guestUsername: guestIdentity.guestUsername,
+        guestId: '',
+        guestUsername: 'Guest',
 
         isAuthenticated: !!user,
         isPremium: profile?.is_premium ?? false,
-        displayName: profile?.display_name || profile?.username || guestIdentity.guestUsername,
+        displayName: profile?.display_name || profile?.username || 'Guest',
 
         signInWithEmail,
         signUpWithEmail,
         signInWithGoogle,
-        signInWithApple,
         signInWithMagicLink,
         signOut,
         updateUsername,

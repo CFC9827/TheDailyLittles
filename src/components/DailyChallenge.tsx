@@ -12,9 +12,15 @@ import {
     loadChallengeState,
     loadGlobalStats,
 } from '../utils/dailyChallenge';
+import { useAuth } from '../contexts/AuthContext';
 import type { DailyChallengeState, GlobalStats, Game } from '../utils/dailyChallenge';
 
-export const DailyChallenge: React.FC = () => {
+interface DailyChallengeProps {
+    onOpenAuth?: () => void;
+}
+
+export const DailyChallenge: React.FC<DailyChallengeProps> = ({ onOpenAuth }) => {
+    const { isAuthenticated } = useAuth();
     const [date, setDate] = useState(getEffectiveDate());
     const [state, setState] = useState<DailyChallengeState | null>(null);
     const [stats, setStats] = useState<GlobalStats | null>(null);
@@ -52,19 +58,35 @@ export const DailyChallenge: React.FC = () => {
             </div>
 
             <div className="daily-challenge__games">
-                {dailyGames.map((game: Game) => {
+                {dailyGames.map((game: Game, index: number) => {
                     const completion = state.completions[game.id];
                     const isCompleted = completion?.completed;
+
+                    // Gate games 2 & 3 for guests
+                    const isGated = index > 0 && !isAuthenticated;
+
+                    const handleClick = (e: React.MouseEvent) => {
+                        if (isGated) {
+                            e.preventDefault();
+                            onOpenAuth?.();
+                        }
+                    };
 
                     return (
                         <Link
                             key={game.id}
-                            to={game.path}
-                            className={`daily-game-btn ${isCompleted ? 'daily-game-btn--completed' : ''}`}
+                            to={`${game.path}?mode=daily`}
+                            className={`daily-game-btn ${isCompleted ? 'daily-game-btn--completed' : ''} ${isGated ? 'daily-game-btn--locked' : ''}`}
                             style={{ '--game-color': game.id === 'cipher' ? '#538d4e' : game.id === 'gridgram' ? '#6366f1' : '#10b981' } as React.CSSProperties}
+                            onClick={handleClick}
                         >
                             <div className="daily-game-btn__status">
-                                {isCompleted ? (
+                                {isGated ? (
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                                        <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                                    </svg>
+                                ) : isCompleted ? (
                                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
                                         <polyline points="20 6 9 17 4 12" />
                                     </svg>

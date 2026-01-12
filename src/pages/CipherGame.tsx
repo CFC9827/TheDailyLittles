@@ -5,23 +5,26 @@
  */
 
 import React, { useState, useCallback, useMemo } from 'react';
-import { Link } from 'react-router-dom';
+import { Header } from '../components/Header';
+import { useLocation } from 'react-router-dom';
 import { useGameState } from '../hooks/useGameState';
 import { DifficultySelector } from '../components/DifficultySelector';
 import { Timer } from '../components/Timer';
 import { PhraseDisplay } from '../components/PhraseDisplay';
 import { Keyboard } from '../components/Keyboard';
 import { CompletionModal } from '../components/CompletionModal';
-import { StatsModal } from '../components/StatsModal';
-import { LeaderboardModal } from '../components/LeaderboardModal';
 import { RulesModal } from '../components/RulesModal';
 import { getDateString } from '../utils/dailySeed';
-import { loadGameProgress, getLeaderboardForDate } from '../utils/storage';
+import { loadGameProgress } from '../utils/storage';
 import { shareResult } from '../utils/share';
 import type { Difficulty } from '../data/phrases';
 import './CipherGame.css';
 
 export const CipherGame: React.FC = () => {
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const isDailyMode = searchParams.get('mode') === 'daily';
+
   const {
     difficulty,
     puzzle,
@@ -37,13 +40,10 @@ export const CipherGame: React.FC = () => {
     assignLetter,
     clearLetter,
     changeDifficulty,
-  } = useGameState('easy');
+  } = useGameState(isDailyMode ? 'easy' : 'easy');
 
   const [showCompletionModal, setShowCompletionModal] = useState(false);
-  const [showStatsModal, setShowStatsModal] = useState(false);
-  const [showLeaderboardModal, setShowLeaderboardModal] = useState(false);
   const [showRulesModal, setShowRulesModal] = useState(false);
-  const [leaderboardDifficulty, setLeaderboardDifficulty] = useState<Difficulty>('easy');
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [showHint, setShowHint] = useState(false);
 
@@ -59,10 +59,6 @@ export const CipherGame: React.FC = () => {
       hard: loadGameProgress(today, 'hard')?.completed ?? false,
     };
   }, [isComplete]);
-
-  const leaderboardEntries = useMemo(() => {
-    return getLeaderboardForDate(getDateString(), leaderboardDifficulty);
-  }, [leaderboardDifficulty, isComplete]);
 
   React.useEffect(() => {
     if (isComplete) {
@@ -92,38 +88,16 @@ export const CipherGame: React.FC = () => {
 
   return (
     <div className="cipher-game">
-      <header className="cipher-game__header">
-        <Link to="/" className="cipher-game__back">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M19 12H5M12 19l-7-7 7-7" />
-          </svg>
-        </Link>
-        <h1 className="cipher-game__title">CIPHER</h1>
-        <div className="cipher-game__header-actions">
-          <button className="cipher-game__header-btn" onClick={() => setShowLeaderboardModal(true)} title="Leaderboard">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M18 3a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3H6a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3V6a3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3h12a3 3 0 0 0 3-3 3 3 0 0 0-3-3z" />
-            </svg>
-          </button>
-          <button className="cipher-game__header-btn" onClick={() => setShowStatsModal(true)} title="Statistics">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <line x1="18" y1="20" x2="18" y2="10" />
-              <line x1="12" y1="20" x2="12" y2="4" />
-              <line x1="6" y1="20" x2="6" y2="14" />
-            </svg>
-          </button>
-          <button className="cipher-game__header-btn" onClick={() => setShowRulesModal(true)} title="How to Play">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <circle cx="12" cy="12" r="10" />
-              <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01" />
-            </svg>
-          </button>
-        </div>
-      </header>
+      <Header
+        title="CIPHER"
+        showBack
+      />
 
       <main className="cipher-game__main">
         <div className="cipher-game__controls">
-          <DifficultySelector currentDifficulty={difficulty} onSelectDifficulty={handleDifficultyChange} completedToday={completedToday} />
+          {!isDailyMode && (
+            <DifficultySelector currentDifficulty={difficulty} onSelectDifficulty={handleDifficultyChange} completedToday={completedToday} />
+          )}
           <Timer elapsedTime={elapsedTime} isRunning={isStarted && !isComplete} isComplete={isComplete} />
         </div>
 
@@ -158,15 +132,7 @@ export const CipherGame: React.FC = () => {
         {!isStarted && !isComplete && <p className="cipher-game__start-hint">Tap a letter tile to begin</p>}
       </main>
 
-      <CompletionModal isOpen={showCompletionModal} onClose={() => setShowCompletionModal(false)} difficulty={difficulty} timeElapsed={elapsedTime} streak={statistics.currentStreak} puzzleNumber={puzzle.puzzleNumber} phrase={puzzle.originalPhrase} onShare={handleShare} />
-      <StatsModal isOpen={showStatsModal} onClose={() => setShowStatsModal(false)} statistics={statistics} />
-      <LeaderboardModal
-        isOpen={showLeaderboardModal}
-        onClose={() => setShowLeaderboardModal(false)}
-        entries={leaderboardEntries}
-        currentDifficulty={leaderboardDifficulty}
-        onChangeDifficulty={setLeaderboardDifficulty}
-      />
+      <CompletionModal isOpen={showCompletionModal} onClose={() => setShowCompletionModal(false)} difficulty={difficulty} timeElapsed={elapsedTime} puzzleNumber={puzzle.puzzleNumber} phrase={puzzle.originalPhrase} onShare={handleShare} />
 
       <RulesModal
         isOpen={showRulesModal}
