@@ -9,7 +9,6 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useFollows } from '../hooks/useSocial';
 import { AuthModal } from '../components/AuthModal';
-import { PaywallModal } from '../components/PaywallModal';
 import { NotificationSettings } from '../components/NotificationSettings';
 import './Profile.css';
 
@@ -17,7 +16,6 @@ export const Profile: React.FC = () => {
     const {
         isAuthenticated,
         isGuest,
-        isPremium,
         displayName,
         profile,
         guestUsername,
@@ -25,7 +23,6 @@ export const Profile: React.FC = () => {
     } = useAuth();
     const { stats } = useFollows();
     const [showAuthModal, setShowAuthModal] = useState(false);
-    const [showPaywall, setShowPaywall] = useState(false);
     const [showNotifications, setShowNotifications] = useState(false);
 
     const handleSignOut = async () => {
@@ -52,7 +49,6 @@ export const Profile: React.FC = () => {
                     <div className="profile-page__info">
                         <h2 className="profile-page__name">
                             {displayName || guestUsername}
-                            {isPremium && <span className="profile-page__premium">Premium</span>}
                         </h2>
                         {profile?.username && (
                             <span className="profile-page__username">@{profile.username}</span>
@@ -63,41 +59,26 @@ export const Profile: React.FC = () => {
                     </div>
                 </div>
 
-                {/* Stats */}
+                {/* Stats - Mutuals Only */}
                 {isAuthenticated && (
                     <div className="profile-page__stats">
-                        <div className="profile-page__stat">
-                            <span className="profile-page__stat-value">{stats.followersCount}</span>
-                            <span className="profile-page__stat-label">Followers</span>
-                        </div>
-                        <div className="profile-page__stat">
-                            <span className="profile-page__stat-value">{stats.followingCount}</span>
-                            <span className="profile-page__stat-label">Following</span>
-                        </div>
-                        <div className="profile-page__stat">
+                        <div className="profile-page__stat profile-page__stat--mutuals">
                             <span className="profile-page__stat-value">{stats.mutualsCount}</span>
-                            <span className="profile-page__stat-label">Mutuals</span>
+                            <span className="profile-page__stat-label">Friends</span>
                         </div>
                     </div>
                 )}
 
                 {/* Actions */}
                 <div className="profile-page__actions">
-                    {!isAuthenticated ? (
+                    {!isAuthenticated && (
                         <button
                             className="profile-page__action profile-page__action--primary"
                             onClick={() => setShowAuthModal(true)}
                         >
                             Create Account
                         </button>
-                    ) : !isPremium ? (
-                        <button
-                            className="profile-page__action profile-page__action--premium"
-                            onClick={() => setShowPaywall(true)}
-                        >
-                            Get Premium
-                        </button>
-                    ) : null}
+                    )}
 
                     <Link to="/leaderboard" className="profile-page__action">
                         View Leaderboard
@@ -132,10 +113,7 @@ export const Profile: React.FC = () => {
                 onClose={() => setShowAuthModal(false)}
             />
 
-            <PaywallModal
-                isOpen={showPaywall}
-                onClose={() => setShowPaywall(false)}
-            />
+
 
             <NotificationSettings
                 isOpen={showNotifications}
