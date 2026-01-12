@@ -173,7 +173,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
         isAuthenticated: !!user,
         isPremium: profile?.is_premium ?? false,
-        displayName: profile?.display_name || profile?.username || 'Guest',
+        displayName: profile?.display_name || profile?.username || user?.user_metadata?.full_name || user?.email?.split('@')[0] || 'Guest',
 
         signInWithEmail,
         signUpWithEmail,
